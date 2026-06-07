@@ -55,6 +55,116 @@ This allows database containers to be managed from:
 
 The Docker daemon is exposed to the Windows host, enabling Docker commands to be executed from development tools without requiring direct interaction with the Linux environment.
 
+# Getting Started
+
+## Verify Database Initialization
+
+Open a MariaDB session inside the container:
+
+```bash
+docker compose exec mariadb mariadb -uroot -proot
+```
+
+You should see a prompt similar to:
+
+```text
+MariaDB [(none)]>
+```
+
+### List Databases
+
+```sql
+SHOW DATABASES;
+```
+
+Expected output:
+
+```text
++--------------------+
+| Database           |
++--------------------+
+| database_report    |
+| information_schema |
+| mysql              |
+| performance_schema |
++--------------------+
+```
+
+### Select Database
+
+```sql
+USE database_report;
+```
+
+Expected output:
+
+```text
+Database changed
+```
+
+### List Tables
+
+```sql
+SHOW TABLES;
+```
+
+Expected output:
+
+```text
++----------------------+
+| Tables_in_database_report |
++----------------------+
+| n_ata_qpa_xref_pn    |
+| n_fleetdata          |
+| n_ik17_raw           |
++----------------------+
+```
+
+### Verify Table Structure
+
+```sql
+DESCRIBE n_fleetdata;
+```
+
+or
+
+```sql
+SHOW CREATE TABLE n_fleetdata\G
+```
+
+### Exit MariaDB
+
+```sql
+EXIT;
+```
+
+## Quick Verification Commands
+
+Verify database exists:
+
+```bash
+docker compose exec mariadb mariadb -uroot -proot -e "SHOW DATABASES;"
+```
+
+Verify tables exist:
+
+```bash
+docker compose exec mariadb mariadb -uroot -proot -e "USE database_report; SHOW TABLES;"
+```
+
+Verify container status:
+
+```bash
+docker compose ps
+```
+
+View MariaDB logs:
+
+```bash
+docker compose logs mariadb
+```
+
+
 # Daily Usage
 
 Open the project in Visual Studio Code and start the database:
